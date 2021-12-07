@@ -1,4 +1,10 @@
 import styled, {keyframes} from "styled-components";
+import CircleA from "./CircleA";
+
+// Object 의 shape (자료유형) 를 지정하기 위한 interface.
+interface BoxProps {
+    bgColor:string;
+}
 
 const First = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
@@ -8,7 +14,7 @@ const First = styled.div`
 // keyframes 를 이용하여 애니메이션 효과를 부여한다.
 const anima = keyframes`
   // from / to 로도 효과를 부여할 수 있으나,
-  // 아래와 같이 애니메이션 효과 진척도에 따라 다른 효과를 주는 것도 가능하다. 
+  // 아래와 같이 애니메이션 효과 진척도에 따라 다른 효과를 주는 것도 가능하다.
   0% {
     transform:rotate(0deg);
     border-radius: 0;
@@ -28,7 +34,7 @@ const SText = styled.span`
 `;
 
 // bgColor 를 props 로 받아 처리하게끔 설정하여 중복되는 css 코드를 줄일 수 있다.
-const Box = styled.div`
+const Box = styled.div<BoxProps>`
   background-color: ${(props) => (props.bgColor)};
   color: antiquewhite;
   height: 100px;
@@ -37,10 +43,10 @@ const Box = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${anima} 3s linear infinite;
-  
+
   // 내부의  item 이 있다면 그 item 의 css 는 이 안에서 처리가 가능하다.
   // "&:" pseudo-selector : 태그 안의 elements 를 선택하여 css 효과를 부여할 수 있다.
-  
+
   // 이하와 같이 특정 styled-components 를 지목할 수도 있다. (SText 부분)
   // 이 방법을 이용하면 item 의 태그 종류에 구애받지 않아도 된다.
   ${SText} {
@@ -92,6 +98,10 @@ const App = () => {
                 <Input/>
                 <Input/>
             </First>
+            <div>
+                <CircleA bgColor="tomato"/>
+                <CircleA bgColor="green"/>
+            </div>
         </>
     );
 }
