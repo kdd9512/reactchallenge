@@ -5,8 +5,8 @@ import 'styled-components';
 // theme.ts 에서 DefaultTheme 을 extend 하여 사용가능.
 declare module 'styled-components' {
     export interface DefaultTheme {
-        textColor: string;
         bgColor: string;
-        btnColor: string;
+        textColor: string;
+        linkColor: string;
     }
 }

@@ -4,14 +4,8 @@ import {DefaultTheme} from "styled-components";
 // 여기서 설정한 색상이 App의 styled-components 에 전달되어 css 를 결정한다.
 
 // interface 인 DefaultTheme 을 extend.
-export const DarkMod: DefaultTheme = {
-    bgColor:"black",
-    textColor:"white",
-    btnColor: "teal"
-};
-
-export const LightMod:DefaultTheme = {
-    bgColor:"white",
-    textColor:"black",
-    btnColor: "tomato",
+export const Theme:DefaultTheme = {
+    bgColor:"#2f3640",
+    textColor:"#44bd32",
+    linkColor: "#00a8ff",
 }
