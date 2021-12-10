@@ -107,7 +107,7 @@ function Coins() {
                     {data?.slice(0, 100).map(coin => (
                         <Coin key={coin.id}>
                             <Link to={{
-                                pathname: `${coin.id}`,
+                                pathname: `/reactchallenge/${coin.id}`,
                                 state: {name: coin.name}
                             }}>
                                 {/*아이콘을 다운받아 사용한다. symbol 은 대문자이므로 .toLowerCase() 로 소문자로 가공*/}

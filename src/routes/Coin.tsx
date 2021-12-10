@@ -186,8 +186,8 @@ function Coin() {
     const {state} = useLocation<RouteState>();
 
     // 특정 url 에 있는지 여부를 확인할 수 있는 useRouteMatch()
-    const priceMatch = useRouteMatch("/:coinId/price");
-    const chartMatch = useRouteMatch("/:coinId/chart");
+    const priceMatch = useRouteMatch("reactchallenge/:coinId/price");
+    const chartMatch = useRouteMatch("reactchallenge/:coinId/chart");
 
     // React Query 를 사용하지 않은 예시.
     // const [loading, setLoading] = useState(true);
@@ -235,7 +235,7 @@ function Coin() {
     <>
         {/* 메인페이지 되돌아가기 버튼 */}
         <Button>
-            <Link to={`/`}>&larr; back</Link>
+            <Link to={`/reactchallenge`}>&larr; back</Link>
         </Button>
         <Container>
             <Helmet>
@@ -290,18 +290,18 @@ function Coin() {
                     {/* chart & price links*/}
                     <Tabs>
                         <Tab isActive={chartMatch !== null}>
-                            <Link to={`/${coinId}/chart`}>Chart</Link>
+                            <Link to={`/reactchallenge/${coinId}/chart`}>Chart</Link>
                         </Tab>
                         <Tab isActive={priceMatch !== null}>
-                            <Link to={`/${coinId}/price`}>Price</Link>
+                            <Link to={`/reactchallenge/${coinId}/price`}>Price</Link>
                         </Tab>
                     </Tabs>
 
                     <Switch>
-                        <Route path={`/:coinId/price`}>
+                        <Route path={`/reactchallenge/:coinId/price`}>
                             <Price tickersData={tickersData}/>
                         </Route>
-                        <Route path={`/:coinId/chart`}>
+                        <Route path={`/reactchallenge/:coinId/chart`}>
                             <Chart coinId={coinId}/>
                         </Route>
                     </Switch>
