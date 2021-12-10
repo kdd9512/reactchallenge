@@ -1,5 +1,6 @@
 import Router from "./Router";
 import {createGlobalStyle} from "styled-components";
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 // 글로벌 스타일을 지정(이하의 CSS 가 모든 페이지에 적용된다.)
 // 모든 css 의 기본값을 제거하기 위해 reset css 를 적용하였다. (구글링 reset css 검색)
@@ -79,6 +80,7 @@ function App() {
         <>
             <GlobalStyle/>
             <Router/>
+            <ReactQueryDevtools initialIsOpen={true} />
         </>
     );
 }
