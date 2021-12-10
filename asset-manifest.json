@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/reactchallenge/static/js/main.dd19c085.chunk.js",
-    "main.js.map": "/reactchallenge/static/js/main.dd19c085.chunk.js.map",
-    "runtime-main.js": "/reactchallenge/static/js/runtime-main.3cbe65e8.js",
-    "runtime-main.js.map": "/reactchallenge/static/js/runtime-main.3cbe65e8.js.map",
-    "static/js/2.c9aaa2e9.chunk.js": "/reactchallenge/static/js/2.c9aaa2e9.chunk.js",
-    "static/js/2.c9aaa2e9.chunk.js.map": "/reactchallenge/static/js/2.c9aaa2e9.chunk.js.map",
-    "index.html": "/reactchallenge/index.html",
-    "static/js/2.c9aaa2e9.chunk.js.LICENSE.txt": "/reactchallenge/static/js/2.c9aaa2e9.chunk.js.LICENSE.txt"
+    "main.js": "/static/js/main.dd19c085.chunk.js",
+    "main.js.map": "/static/js/main.dd19c085.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.30fcaaa9.js",
+    "runtime-main.js.map": "/static/js/runtime-main.30fcaaa9.js.map",
+    "static/js/2.e46daae8.chunk.js": "/static/js/2.e46daae8.chunk.js",
+    "static/js/2.e46daae8.chunk.js.map": "/static/js/2.e46daae8.chunk.js.map",
+    "index.html": "/index.html",
+    "static/js/2.e46daae8.chunk.js.LICENSE.txt": "/static/js/2.e46daae8.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3cbe65e8.js",
-    "static/js/2.c9aaa2e9.chunk.js",
+    "static/js/runtime-main.30fcaaa9.js",
+    "static/js/2.e46daae8.chunk.js",
     "static/js/main.dd19c085.chunk.js"
   ]
 }
