@@ -25,15 +25,6 @@ function Chart({coinId}: IChartProps) {
         () => fetchCoinHistory(coinId)
     );
 
-    const x = data?.map(price => price.volume);
-
-    const y = data?.map(price => [
-        price.open,
-        price.high,
-        price.low,
-        price.close
-    ])
-
     return (
         <div>
             {isLoading ? (
@@ -132,7 +123,6 @@ function Chart({coinId}: IChartProps) {
                                     price.close
                                 ])[9]
                             },
-
                         ]
                     }]}
                     options={{
@@ -181,8 +171,6 @@ function Chart({coinId}: IChartProps) {
                         },
                     }
                     }
-
-
                 />
             )}
         </div>

@@ -5,6 +5,7 @@ import Price from "./Price";
 import Chart from "./Chart";
 import {useQuery} from "react-query";
 import {fetchCoinInfo, fetchCoinTickers} from "../api";
+import {Helmet} from "react-helmet";
 
 // interface
 interface RouteParams {
@@ -110,7 +111,7 @@ const Overview = styled.ul`
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
   min-width: 50px;
   min-height: 40px;
   border-radius: 10px;
@@ -162,6 +163,20 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
+const Button = styled.button`
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 20px;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 6px 7px 15px darkslategrey;
+  display: block;
+
+  a {
+    font-size: 35px;
+    color: ${props => props.theme.textColor};
+  }
+`;
+
 
 // main function
 function Coin() {
@@ -206,14 +221,28 @@ function Coin() {
 
     const {isLoading: tickersLoading, data: tickersData} = useQuery<IPriceData>(
         ["tickers", coinId],
-        () => fetchCoinTickers(coinId)
+        () => fetchCoinTickers(coinId),
+        {
+            refetchInterval: 4000,
+        }
     );
 
     // isLoading 이 두 개 이므로 or(||) 를 사용하여 loading 둘 중 하나임을 알려야 한다.
     const loading = infoLoading || tickersLoading;
 
     return (
+    <>
+        {/* 메인페이지 되돌아가기 버튼 */}
+        <Button>
+            <Link to={`/`}>BACK</Link>
+        </Button>
         <Container>
+            <Helmet>
+                <title>
+                    {state?.name ? state.name.toUpperCase() :
+                        loading ? "Loading..." : infoData?.name.toUpperCase()}
+                </title>
+            </Helmet>
             <Header>
                 <Title>{state?.name ? state.name.toUpperCase() :
                     loading ? "Loading..." : infoData?.name.toUpperCase()}</Title>
@@ -233,9 +262,9 @@ function Coin() {
                                 {`$${infoData?.symbol}`}
                             </span>
                         </li>
-                        <li><span>&nbsp;OPEN SRC:</span><br/>
+                        <li><span>&nbsp;PRICE:</span><br/>
                             <span>
-                                {infoData?.open_source ? "YES" : "NO"}
+                                ${tickersData?.quotes.USD.price.toFixed(3)}
                             </span>
                         </li>
                     </Overview>
@@ -269,20 +298,18 @@ function Coin() {
 
                     <Switch>
                         <Route path={`/:coinId/price`}>
-                            <Price/>
+                            <Price tickersData={tickersData}/>
                         </Route>
                         <Route path={`/:coinId/chart`}>
                             <Chart coinId={coinId}/>
                         </Route>
                     </Switch>
-                    {/* 메인페이지 되돌아가기 버튼 */}
-                    <button>
-                        <Link to={`/`}>BACK</Link>
-                    </button>
                 </div>
             )}
         </Container>
-    );
+    </>
+)
+    ;
 }
 
 export default Coin;

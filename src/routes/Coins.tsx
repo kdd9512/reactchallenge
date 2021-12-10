@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {useQuery} from "react-query";
 import {fetchCoins} from "../api";
+import {Helmet} from "react-helmet";
 
 // 이하의 자료유형을 바탕으로 Coin 정보의 interface 를 작성.
 interface ICoins {
@@ -88,10 +89,13 @@ function Coins() {
     // useQuery : api.ts 에서 설정한 fetchCoins function 을 호출하고, 그 결과를 data 에 담는다.
     // 만약 fetchCoins(=fetcher function) 가 loading 중이면 isLoading 으로 이를 알린다.
     // 기존에 데이터를 .slice() 하였던 부분은 return 내부에서 처리한다.
-    const { isLoading, data } = useQuery<ICoins[]>("allCoins", fetchCoins)
+    const {isLoading, data} = useQuery<ICoins[]>("allCoins", fetchCoins)
 
     return (
         <Container>
+            <Helmet>
+                <title>TOP 100 COINS</title>
+            </Helmet>
             <Header>
                 <Title>TOP 100 COINS</Title>
             </Header>
@@ -100,11 +104,12 @@ function Coins() {
             ) : (
                 <CoinList>
                     {/* 기존에 데이터를 .slice() 하였던 부분은 여기서 처리한다. */}
-                    {data?.slice(0,100).map(coin => (
+                    {data?.slice(0, 100).map(coin => (
                         <Coin key={coin.id}>
                             <Link to={{
-                                pathname:`${coin.id}`,
-                                state: { name:coin.name }}}>
+                                pathname: `${coin.id}`,
+                                state: {name: coin.name}
+                            }}>
                                 {/*아이콘을 다운받아 사용한다. symbol 은 대문자이므로 .toLowerCase() 로 소문자로 가공*/}
                                 <Img src={
                                     `https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}/>

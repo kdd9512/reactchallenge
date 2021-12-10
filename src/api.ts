@@ -16,7 +16,7 @@ export function fetchCoinInfo(coinId: string) {
 
 export function fetchCoinTickers(coinId: string) {
     return fetch(`${BASE_URL}/tickers/${coinId}`)
-        .then(resp => resp.json()
+        .then(resp => resp.json(),
         );
 }
 
