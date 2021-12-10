@@ -141,30 +141,18 @@ function Chart({coinId}: IChartProps) {
                         xaxis: {
                             axisBorder: {show: false},
                             axisTicks: {show: false},
-                            categories: data?.map(price => price.time_close.substring(5, 10)),
-                            type: "datetime",
-                            title: {
-                                text: "times",
-                                offsetX: 0,
-                                offsetY: 0,
-                            }
+                            labels: {show: false},
                         },
                         yaxis: {
-                            show: true,
-                            seriesName: "price",
-                            decimalsInFloat: 0,
-                            title: {
-                                text: "price (USD)",
-                                rotate: -90,
-                                offsetX: 0,
-                                offsetY: 0,
-                            }
+                            show: false,
                         },
                         tooltip: {
-                            enabled: true,
                             y: {
                                 formatter: (value) => `$ ${value.toFixed(3)}`
                             }
+                        },
+                        grid:{
+                            show:false
                         },
                         stroke: {
                             width: 2,

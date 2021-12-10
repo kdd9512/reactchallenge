@@ -111,7 +111,7 @@ const Overview = styled.ul`
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.detailBoxColor};
   min-width: 50px;
   min-height: 40px;
   border-radius: 10px;
@@ -150,7 +150,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.detailBoxColor};
   padding: 7px 0;
   border-radius: 7px;
   box-shadow: 6px 7px 15px darkslategrey;
@@ -164,15 +164,16 @@ const Tab = styled.span<{ isActive: boolean }>`
 `;
 
 const Button = styled.button`
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${props => props.theme.detailBoxColor};
   margin: 20px;
-  border-radius: 7px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  border: 1px solid ${props => props.theme.detailBoxColor};
   box-shadow: 6px 7px 15px darkslategrey;
   display: block;
 
   a {
     font-size: 35px;
+    font-weight: bold;
     color: ${props => props.theme.textColor};
   }
 `;
@@ -234,7 +235,7 @@ function Coin() {
     <>
         {/* 메인페이지 되돌아가기 버튼 */}
         <Button>
-            <Link to={`/`}>BACK</Link>
+            <Link to={`/`}>&larr; back</Link>
         </Button>
         <Container>
             <Helmet>

@@ -50,7 +50,7 @@ const Img = styled.img`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: #718093;
+  background-color: ${props => props.theme.boxColor};
   color: ${props => props.theme.bgColor};
   margin-bottom: 12px;
   border-radius: 10px;

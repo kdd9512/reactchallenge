@@ -8,5 +8,7 @@ declare module 'styled-components' {
         bgColor: string;
         textColor: string;
         linkColor: string;
+        boxColor: string;
+        detailBoxColor: string;
     }
 }

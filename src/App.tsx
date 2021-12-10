@@ -1,6 +1,8 @@
 import Router from "./Router";
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle, ThemeProvider} from "styled-components";
 import { ReactQueryDevtools } from 'react-query/devtools'
+import {darkTheme, LightTheme} from "./theme";
+import {useState} from "react";
 
 // 글로벌 스타일을 지정(이하의 CSS 가 모든 페이지에 적용된다.)
 // 모든 css 의 기본값을 제거하기 위해 reset css 를 적용하였다. (구글링 reset css 검색)
@@ -74,14 +76,31 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const Button = styled.button`
+  background-color: ${props => props.theme.detailBoxColor};
+  margin: 20px;
+  border-radius: 30px;
+  border: 1px solid ${props => props.theme.detailBoxColor};
+  box-shadow: 6px 7px 15px darkslategrey;
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+  color: ${props => props.theme.textColor};
+`;
+
 function App() {
+    const [isDark, setIsDark] = useState(false);
+    const toggleDark = () => {
+        setIsDark(current => !current);
+    }
 
     return (
-        <>
+        <ThemeProvider theme={isDark ? darkTheme : LightTheme}>
+            <Button onClick={toggleDark}>{isDark ? "Light Theme" : "Dark Theme"}</Button>
             <GlobalStyle/>
             <Router/>
             <ReactQueryDevtools initialIsOpen={true} />
-        </>
+        </ThemeProvider>
     );
 }
 
