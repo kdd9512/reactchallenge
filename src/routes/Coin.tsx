@@ -6,6 +6,8 @@ import Chart from "./Chart";
 import {useQuery} from "react-query";
 import {fetchCoinInfo, fetchCoinTickers} from "../api";
 import {Helmet} from "react-helmet";
+import {useRecoilValue, useSetRecoilState} from "recoil";
+import {isDarkAtom} from "../atoms";
 
 // interface
 interface RouteParams {
@@ -78,6 +80,12 @@ interface IPriceData {
         }
     };
 }
+
+// props 를 원하는 Component 에 도달할 때 까지 계속 전달하여 사용하는 기존방식.
+// interface ICoinProps {
+//     isDark:boolean;
+//     toggleDark: () => void;
+// }
 
 // styled-components
 const Container = styled.div`
@@ -178,9 +186,32 @@ const Button = styled.button`
   }
 `;
 
+const ThemeButton = styled.button`
+  background-color: ${props => props.theme.detailBoxColor};
+  margin: 20px;
+  border-radius: 30px;
+  border: 1px solid ${props => props.theme.detailBoxColor};
+  box-shadow: 6px 7px 15px darkslategrey;
+  display: block;
+  font-size: 25px;
+  font-weight: bold;
+  color: ${props => props.theme.textColor};
+`;
+
 
 // main function
+// function Coin({isDark, toggleDark}:ICoinProps) {
 function Coin() {
+
+    // recoil 을 사용하는 새로운 방식.
+    // useSetRecoilState 는 setState 와 같은 방식으로 동작.
+    // onClick 으로 Function 을 사용할 것을 선언, setterFunc(prev => !prev)
+    const setMod = useSetRecoilState(isDarkAtom);
+    // 그냥 setterFunc(prev => !prev) 로 써도 되지만 코드가 지저분하므로 따로 함수로 뺀다.
+    const toggleDark = () => setMod(prev => !prev);
+    // atom 의 값을 관찰하고 내부의 state 를 사용한다.
+    const isDark = useRecoilValue(isDarkAtom);
+
     // 각 코인마다 존재하는 고유한 id 를 param 으로 전달, 고유한 key 로서 사용.
     const {coinId} = useParams<RouteParams>();
     const {state} = useLocation<RouteState>();
@@ -247,6 +278,9 @@ function Coin() {
             <Header>
                 <Title>{state?.name ? state.name.toUpperCase() :
                     loading ? "Loading..." : infoData?.name.toUpperCase()}</Title>
+                <div>
+                    <ThemeButton onClick={toggleDark}>{isDark ? "Light Theme" : "Dark Theme"}</ThemeButton>
+                </div>
             </Header>
             {loading ? (
                 <Loader>LOADING....</Loader>
@@ -302,6 +336,7 @@ function Coin() {
                             <Price tickersData={tickersData}/>
                         </Route>
                         <Route path={`/reactchallenge/:coinId/chart`}>
+                            {/*<Chart coinId={coinId} isDark={isDark}/>*/}
                             <Chart coinId={coinId}/>
                         </Route>
                     </Switch>

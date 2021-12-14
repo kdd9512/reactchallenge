@@ -3,6 +3,8 @@ import styled, {createGlobalStyle, ThemeProvider} from "styled-components";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import {darkTheme, LightTheme} from "./theme";
 import {useState} from "react";
+import {isDarkAtom} from "./atoms";
+import {useRecoilValue} from "recoil";
 
 // 글로벌 스타일을 지정(이하의 CSS 가 모든 페이지에 적용된다.)
 // 모든 css 의 기본값을 제거하기 위해 reset css 를 적용하였다. (구글링 reset css 검색)
@@ -76,29 +78,25 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Button = styled.button`
-  background-color: ${props => props.theme.detailBoxColor};
-  margin: 20px;
-  border-radius: 30px;
-  border: 1px solid ${props => props.theme.detailBoxColor};
-  box-shadow: 6px 7px 15px darkslategrey;
-  display: block;
-  font-size: 25px;
-  font-weight: bold;
-  color: ${props => props.theme.textColor};
-`;
-
 function App() {
-    const [isDark, setIsDark] = useState(false);
-    const toggleDark = () => {
-        setIsDark(current => !current);
-    }
+
+    // props 를 원하는 Component 에 도달할 때 까지 계속 전달하여 사용하는 기존방식.
+
+    // const [isDark, setIsDark] = useState(false);
+    // const toggleDark = () => {
+    //     setIsDark(current => !current);
+    // }
+
+    // recoil 을 사용하는 새로운 방식.
+    const isDark = useRecoilValue(isDarkAtom)
 
     return (
+        // ThemeProvider 를 이용하여 styled-components 에서 이용할 수 있는 props 를 전달,
+        // 해당 props 를 이용하여 css 를 바꾸게 만들 수 있다.
         <ThemeProvider theme={isDark ? darkTheme : LightTheme}>
-            <Button onClick={toggleDark}>{isDark ? "Light Theme" : "Dark Theme"}</Button>
             <GlobalStyle/>
-            <Router/>
+            {/*<Router toggleDark={toggleDark} isDark={isDark}/>*/}
+            <Router />
             <ReactQueryDevtools initialIsOpen={true} />
         </ThemeProvider>
     );

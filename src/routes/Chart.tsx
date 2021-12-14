@@ -1,9 +1,12 @@
 import {useQuery} from "react-query";
 import {fetchCoinHistory} from "../api";
 import ApexChart from "react-apexcharts";
+import {useRecoilValue} from "recoil";
+import {isDarkAtom} from "../atoms";
 
 interface IChartProps {
     coinId: string;
+    // isDark: boolean;
 }
 
 interface IChartData {
@@ -17,12 +20,19 @@ interface IChartData {
     market_cap: number;
 }
 
-
+// props 를 원하는 Component 에 도달할 때 까지 계속 전달하여 사용하는 기존방식.
+// function Chart({coinId,isDark}: IChartProps) {
 function Chart({coinId}: IChartProps) {
+
+    // recoil 을 사용하는 새로운 방식.
+    // atom 의 값을 관찰하고 내부의 state 를 사용한다.
+    const isDark = useRecoilValue(isDarkAtom);
 
     const {isLoading, data} = useQuery<IChartData[]>(
         ["ohlcv", coinId],
-        () => fetchCoinHistory(coinId)
+        () => fetchCoinHistory(coinId), {
+            refetchInterval: 10000,
+        }
     );
 
     return (
@@ -33,129 +43,62 @@ function Chart({coinId}: IChartProps) {
                 <ApexChart
                     type="candlestick"
                     series={[{
-                        data: [
-                            {
-                                x: data?.map(price => price.time_close)[0],
-                                y: data?.map(price => [
+                        data: data?.map(price => ({
+                                x: price.time_close.slice(0, 10),
+                                y: [
                                     price.open,
                                     price.high,
                                     price.low,
                                     price.close
-                                ])[0]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[1],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[1]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[2],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[2]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[3],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[3]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[4],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[4]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[5],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[5]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[6],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[6]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[7],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[7]
-                            },{
-                                x: data?.map(price => price.time_close)[8],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[8]
-                            },
-                            {
-                                x: data?.map(price => price.time_close)[9],
-                                y: data?.map(price => [
-                                    price.open,
-                                    price.high,
-                                    price.low,
-                                    price.close
-                                ])[9]
-                            },
-                        ]
+                                ]
+                            })
+                        )
                     }]}
                     options={{
                         theme: {
-                            mode: "dark",
+                            mode: isDark ? "dark" : "light",
                         },
                         chart: {
-                            type: "candlestick",
-                            height: 500,
-                            width: 750,
+                            height: 300,
+                            width: 500,
                             toolbar: {
                                 show: false,
                             },
                             background: "transparent",
                         },
                         xaxis: {
-                            axisBorder: {show: false},
-                            axisTicks: {show: false},
-                            labels: {show: false},
+                            axisBorder: {show: true},
+                            axisTicks: {
+                                show: true,
+                                color: isDark ? "white" : "darkgrey",
+                            },
+                            labels: {show: true},
                         },
                         yaxis: {
-                            show: false,
-                        },
-                        tooltip: {
-                            y: {
-                                formatter: (value) => `$ ${value.toFixed(3)}`
+                            show: true,
+                            labels: {
+                                formatter: (value) => `$ ${value.toFixed(0)}`
+                            },
+                            tooltip: {
+                                enabled: true,
                             }
                         },
-                        grid:{
-                            show:false
+                        tooltip: {
+                            enabled: true,
+                            y: {
+                                formatter: (value) => `$ ${value.toFixed(0)}`
+                            },
+                            fixed: {
+                                enabled: true,
+                                position: 'topRight',
+                            }
+                        },
+                        grid: {
+                            show: true,
+                            borderColor: isDark ? "white" : "darkgrey",
                         },
                         stroke: {
-                            width: 2,
+                            width: 1.5,
                         },
                     }
                     }
