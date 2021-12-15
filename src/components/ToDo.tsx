@@ -1,7 +1,6 @@
 import React from "react";
 import {Categories, IToDo, stName, toDoSelector, toDoState} from "../atoms";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {get} from "react-hook-form";
+import {useRecoilState, useRecoilValue} from "recoil";
 
 function ToDo({text, category, id}: IToDo) {
 
@@ -39,12 +38,18 @@ function ToDo({text, category, id}: IToDo) {
         const cleanToDos = toDos.filter((toDo) => toDo.id.toString() !== liId);
         setToDos(cleanToDos);
         localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
-        if (toDos.length == 1) {
+        if (toDos.length === 1) {
             localStorage.clear();
         }
     }
 
     const savedToDos = localStorage.getItem(stName.localToDos);
+    let currToDos = [];
+    if (savedToDos !== null) {
+        currToDos = JSON.parse(savedToDos);
+
+    }
+    localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
 
     return (
         <li id={id.toString()}>

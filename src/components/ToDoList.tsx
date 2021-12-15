@@ -1,8 +1,7 @@
-import React, {useState} from "react";
-import {useForm} from "react-hook-form"
-import {atom, useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import React from "react";
+import {useRecoilValue} from "recoil";
 import CreateToDo from "./CreateToDo";
-import {Categories, categoryState, stName, toDoSelector, toDoState} from "../atoms";
+import {IToDo, stName, toDoSelector} from "../atoms";
 import ToDo from "./ToDo";
 import SelectToDo from "./SelectToDo";
 
