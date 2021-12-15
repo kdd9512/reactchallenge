@@ -1,7 +1,7 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {categoryState, stName, toDoSelector, toDoState} from "../atoms";
+import {categoryState, stName, toDoState} from "../atoms";
 
 interface IForm {
     toDo: string;
@@ -26,9 +26,12 @@ function CreateToDo() {
             ...prevToDos,
         ]);
         setValue("toDo", "");
-        localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
+        const savedToDos = localStorage.getItem(stName.localToDos);
+        if (savedToDos != null) {
+            return JSON.parse(savedToDos);
+        }
+        localStorage.setItem(stName.localToDos,JSON.stringify(savedToDos));
     }
-
 
     return (
         <form onSubmit={handleSubmit(handleValid)}>

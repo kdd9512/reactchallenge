@@ -14,6 +14,7 @@ function ToDo({text, category, id}: IToDo) {
     //     console.log("want to ", newCategory);
     // }
 
+    localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
 
     const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const {
@@ -30,11 +31,7 @@ function ToDo({text, category, id}: IToDo) {
                 ...prevToDos.slice(targetIndex + 1),
             ];
         })
-        const SavedLocalValue = localStorage.getItem(stName.localToDos);
-        if (SavedLocalValue !== null) {
-            JSON.parse(SavedLocalValue);
-        }
-        localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
+        localStorage.setItem(stName.localToDos, JSON.stringify(setToDos));
     }
 
     const deleteToDo = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,7 +39,6 @@ function ToDo({text, category, id}: IToDo) {
         const cleanToDos = toDos.filter((toDo) => toDo.id.toString() !== liId);
         setToDos(cleanToDos);
         localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
-        console.log(selector.length);
     }
 
     return (
