@@ -1,7 +1,7 @@
 import React from "react";
 import {useForm} from "react-hook-form";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {categoryState, toDoState} from "../atoms";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {categoryState, stName, toDoSelector, toDoState} from "../atoms";
 
 interface IForm {
     toDo: string;
@@ -9,9 +9,10 @@ interface IForm {
 
 function CreateToDo() {
 
-    const setToDos = useSetRecoilState(toDoState);
     // category 의 값만 필요하므로 useRecoilValue
     const category = useRecoilValue(categoryState);
+    const [toDos, setToDos] = useRecoilState(toDoState);
+
     const {register, handleSubmit, setValue} = useForm<IForm>();
 
     // {} 를 이용, IForm 의 toDo만 가져온다.
@@ -21,16 +22,18 @@ function CreateToDo() {
         // 기존 toDos 인 prevToDos 의 element 를 Array 에 담고, 새 toDos 내용을 {}에 담는다.
 
         setToDos(prevToDos => [
-            {text: toDo, id: Date.now(), category },
+            {text: toDo, id: Date.now(), category},
             ...prevToDos,
         ]);
         setValue("toDo", "");
+        localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
     }
+
 
     return (
         <form onSubmit={handleSubmit(handleValid)}>
             <input {...register("toDo")}
-                   type="text" placeholder="Write To DO"/>
+                   type="text" placeholder="Write To Do"/>
             <button type="submit">Add</button>
         </form>
     );

@@ -1,10 +1,12 @@
 import React from "react";
-import {Categories, IToDo, toDoState} from "../atoms";
-import {useSetRecoilState} from "recoil";
+import {Categories, IToDo, stName, toDoSelector, toDoState} from "../atoms";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {get} from "react-hook-form";
 
 function ToDo({text, category, id}: IToDo) {
 
-    const setToDos = useSetRecoilState(toDoState);
+    const [toDos, setToDos] = useRecoilState(toDoState);
+    const selector = useRecoilValue(toDoSelector);
 
     // 들어올 props 가 interface 의 어떠한 요소와 완벽히 일치하는 것을 표기하려면
     // interface명["해당요소 이름"]
@@ -12,10 +14,12 @@ function ToDo({text, category, id}: IToDo) {
     //     console.log("want to ", newCategory);
     // }
 
+
     const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         const {
             currentTarget: {name},
         } = e;
+
         setToDos((prevToDos) => {
             const targetIndex = prevToDos.findIndex(toDo => toDo.id === id);
             // const prevToDo = prevToDos[targetIndex];
@@ -26,10 +30,23 @@ function ToDo({text, category, id}: IToDo) {
                 ...prevToDos.slice(targetIndex + 1),
             ];
         })
+        const SavedLocalValue = localStorage.getItem(stName.localToDos);
+        if (SavedLocalValue !== null) {
+            JSON.parse(SavedLocalValue);
+        }
+        localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
+    }
+
+    const deleteToDo = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const liId = e.currentTarget.parentElement?.id;
+        const cleanToDos = toDos.filter((toDo) => toDo.id.toString() !== liId);
+        setToDos(cleanToDos);
+        localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
+        console.log(selector.length);
     }
 
     return (
-        <li>
+        <li id={id.toString()}>
             <span>{text}</span>
             {category !== Categories.DOING && (
                 // <button onClick={() => onClick("DOING")}>Doing</button>
@@ -45,7 +62,7 @@ function ToDo({text, category, id}: IToDo) {
                 // <button onClick={() => onClick("DONE")}>Done</button>
                 <button name={Categories.DONE} onClick={onClick}>Done</button>
             )}
-
+            <button onClick={deleteToDo}>Delete</button>
         </li>
     );
 }
