@@ -12,10 +12,10 @@ export const darkTheme:DefaultTheme = {
     detailBoxColor: "#00000080",
 };
 
-export const LightTheme:DefaultTheme = {
-    bgColor:"#dcdde1",
-    textColor:"#222f3e",
-    linkColor: "#44bd32",
-    boxColor: "#0097e6",
-    detailBoxColor: "whitesmoke",
-}
+// export const LightTheme:DefaultTheme = {
+//     bgColor:"#dcdde1",
+//     textColor:"#222f3e",
+//     linkColor: "#44bd32",
+//     boxColor: "#0097e6",
+//     detailBoxColor: "whitesmoke",
+// }

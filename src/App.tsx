@@ -1,15 +1,9 @@
-import Router from "./Router";
-import styled, {createGlobalStyle, ThemeProvider} from "styled-components";
-import { ReactQueryDevtools } from 'react-query/devtools'
-import {darkTheme, LightTheme} from "./theme";
-import {useState} from "react";
-import {isDarkAtom} from "./atoms";
-import {useRecoilValue} from "recoil";
+import {createGlobalStyle} from "styled-components";
+import ToDoList from "./components/ToDoList";
 
-// 글로벌 스타일을 지정(이하의 CSS 가 모든 페이지에 적용된다.)
-// 모든 css 의 기본값을 제거하기 위해 reset css 를 적용하였다. (구글링 reset css 검색)
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200;400&display=swap');
+
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -59,18 +53,18 @@ const GlobalStyle = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
-  
+
   * {
     box-sizing: border-box;
   }
-  
+
   // 만약 상단에서 @import 가 실패하면 이하의 글꼴을 적용한다.
   body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: ${props => props.theme.bgColor};
     color: ${props => props.theme.textColor};
   }
-  
+
   // Link 태그는 결국 HTML 에서 a 태그로 바뀌므로 이곳에서 CSS 를 설정한다.
   a {
     text-decoration: none;
@@ -78,28 +72,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+
 function App() {
 
-    // props 를 원하는 Component 에 도달할 때 까지 계속 전달하여 사용하는 기존방식.
-
-    // const [isDark, setIsDark] = useState(false);
-    // const toggleDark = () => {
-    //     setIsDark(current => !current);
-    // }
-
-    // recoil 을 사용하는 새로운 방식.
-    const isDark = useRecoilValue(isDarkAtom)
-
     return (
-        // ThemeProvider 를 이용하여 styled-components 에서 이용할 수 있는 props 를 전달,
-        // 해당 props 를 이용하여 css 를 바꾸게 만들 수 있다.
-        <ThemeProvider theme={isDark ? darkTheme : LightTheme}>
+        <>
             <GlobalStyle/>
-            {/*<Router toggleDark={toggleDark} isDark={isDark}/>*/}
-            <Router />
-            <ReactQueryDevtools initialIsOpen={true} />
-        </ThemeProvider>
-    );
+            <ToDoList/>
+        </>
+    )
 }
 
 export default App;
