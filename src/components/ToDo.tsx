@@ -1,11 +1,10 @@
 import React from "react";
-import {Categories, IToDo, stName, toDoSelector, toDoState} from "../atoms";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {Categories, IToDo, stName, toDoState} from "../atoms";
+import {useRecoilState} from "recoil";
 
 function ToDo({text, category, id}: IToDo) {
 
     const [toDos, setToDos] = useRecoilState(toDoState);
-    const selector = useRecoilValue(toDoSelector);
 
     // 들어올 props 가 interface 의 어떠한 요소와 완벽히 일치하는 것을 표기하려면
     // interface명["해당요소 이름"]
@@ -43,12 +42,6 @@ function ToDo({text, category, id}: IToDo) {
         }
     }
 
-    const savedToDos = localStorage.getItem(stName.localToDos);
-    let currToDos = [];
-    // currToDos 내의 text 에 접근하기만 하면 되는데 방법을 모르겠다.
-    if (savedToDos !== null) {
-        currToDos = JSON.parse(savedToDos);
-    }
     localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
 
     return (

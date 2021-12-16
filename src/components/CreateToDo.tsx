@@ -26,8 +26,9 @@ function CreateToDo() {
             ...prevToDos,
         ]);
         setValue("toDo", "");
-        localStorage.setItem(stName.localToDos,JSON.stringify(toDos));
     }
+
+    localStorage.setItem(stName.localToDos,JSON.stringify(toDos));
 
     return (
         <form onSubmit={handleSubmit(handleValid)}>
