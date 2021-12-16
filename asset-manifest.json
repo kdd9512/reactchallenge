@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/reactchallenge/static/js/main.6ad9bd14.chunk.js",
-    "main.js.map": "/reactchallenge/static/js/main.6ad9bd14.chunk.js.map",
+    "main.js": "/reactchallenge/static/js/main.48cced40.chunk.js",
+    "main.js.map": "/reactchallenge/static/js/main.48cced40.chunk.js.map",
     "runtime-main.js": "/reactchallenge/static/js/runtime-main.3cbe65e8.js",
     "runtime-main.js.map": "/reactchallenge/static/js/runtime-main.3cbe65e8.js.map",
     "static/js/2.ea18d094.chunk.js": "/reactchallenge/static/js/2.ea18d094.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.3cbe65e8.js",
     "static/js/2.ea18d094.chunk.js",
-    "static/js/main.6ad9bd14.chunk.js"
+    "static/js/main.48cced40.chunk.js"
   ]
 }
