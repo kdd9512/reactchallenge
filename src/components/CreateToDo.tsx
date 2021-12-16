@@ -26,11 +26,7 @@ function CreateToDo() {
             ...prevToDos,
         ]);
         setValue("toDo", "");
-        const savedToDos = localStorage.getItem(stName.localToDos);
-        if (savedToDos != null) {
-            return JSON.parse(savedToDos);
-        }
-        localStorage.setItem(stName.localToDos,JSON.stringify(savedToDos));
+        localStorage.setItem(stName.localToDos,JSON.stringify(toDos));
     }
 
     return (

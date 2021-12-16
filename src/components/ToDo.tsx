@@ -45,9 +45,9 @@ function ToDo({text, category, id}: IToDo) {
 
     const savedToDos = localStorage.getItem(stName.localToDos);
     let currToDos = [];
+    // currToDos 내의 text 에 접근하기만 하면 되는데 방법을 모르겠다.
     if (savedToDos !== null) {
         currToDos = JSON.parse(savedToDos);
-
     }
     localStorage.setItem(stName.localToDos, JSON.stringify(toDos));
 
